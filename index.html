@@ -56,6 +56,20 @@
   .photo:hover img{transform:scale(1.08);}
   .photo .cap{position:absolute;left:0;right:0;bottom:0;padding:26px 14px 12px;background:linear-gradient(transparent,rgba(0,0,0,.75));font-size:14px;letter-spacing:.05em;}
 
+  /* 朋友上传照片区域 */
+  .upload-box{background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:28px 24px;margin-bottom:52px;backdrop-filter:blur(8px);box-shadow:0 18px 40px rgba(0,0,0,.35);text-align:center;}
+  .upload-box h2{font-size:20px;margin-bottom:10px;color:var(--gold);}
+  .upload-box .tip{color:#d9c7e6;font-size:14px;line-height:1.9;margin-bottom:20px;}
+  .upload-btn{display:inline-block;cursor:pointer;border:none;border-radius:999px;padding:14px 34px;font-size:16px;font-weight:700;color:#3a1c3f;background:linear-gradient(92deg,#5cd6c0,#8f6bf5);box-shadow:0 12px 30px rgba(92,214,192,.4);transition:transform .2s ease,box-shadow .2s ease;margin:4px;}
+  .upload-btn:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 18px 40px rgba(92,214,192,.55);}
+  .upload-btn.ghost{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.3);box-shadow:none;}
+  .upload-btn.ghost:hover{background:rgba(255,255,255,.24);box-shadow:none;}
+  .my-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-top:24px;}
+  .my-photo{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:1/1;box-shadow:0 10px 26px rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.18);background:#2a1030;animation:pop .4s cubic-bezier(.2,1.4,.4,1);}
+  .my-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .my-photo .del{position:absolute;top:6px;right:6px;width:26px;height:26px;border-radius:50%;border:none;cursor:pointer;background:rgba(0,0,0,.55);color:#fff;font-size:15px;line-height:1;display:grid;place-items:center;}
+  .my-photo .del:hover{background:#ff6fa5;}
+
   .letter{background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:32px 28px;margin-bottom:52px;backdrop-filter:blur(8px);box-shadow:0 18px 40px rgba(0,0,0,.35);}
   .letter h2{font-size:20px;margin-bottom:16px;color:var(--gold);}
   .letter p{line-height:2;color:#f0e3f6;font-size:15.5px;margin-bottom:12px;}
@@ -119,21 +133,30 @@
     <div class="section-title">属于你的<span> 美好瞬间</span></div>
     <div class="gallery">
       <div class="photo">
-        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=warm%20sunset%20beach%20with%20colorful%20birthday%20balloons%20floating%2C%20dreamy%20bokeh%2C%20soft%20pink%20and%20gold%20tones%2C%20cinematic%20photography&image_size=landscape_4_3" alt="美好瞬间">
+        <img src="photos/photo1.jpg" alt="美好瞬间">
         <div class="cap">愿日子清透，抬头遇见温柔</div>
       </div>
       <div class="photo">
-        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=elegant%20birthday%20cake%20with%20lit%20candles%20on%20a%20festive%20table%2C%20golden%20confetti%2C%20warm%20cozy%20lighting%2C%20shallow%20depth%20of%20field&image_size=landscape_4_3" alt="美好瞬间">
+        <img src="photos/photo2.jpg" alt="美好瞬间">
         <div class="cap">许下的心愿，都会慢慢实现</div>
       </div>
       <div class="photo">
-        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=bouquet%20of%20pink%20peonies%20and%20roses%20with%20gift%20boxes%2C%20soft%20pastel%20background%2C%20bright%20cheerful%20mood%2C%20high%20quality%20photography&image_size=landscape_4_3" alt="美好瞬间">
+        <img src="photos/photo3.jpg" alt="美好瞬间">
         <div class="cap">鲜花与礼物，都不及你的笑颜</div>
       </div>
       <div class="photo">
-        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=night%20sky%20full%20of%20stars%20above%20calm%20lake%2C%20milky%20way%2C%20dreamy%20purple%20and%20blue%20tones%2C%20peaceful%20atmosphere&image_size=landscape_4_3" alt="美好瞬间">
+        <img src="photos/photo4.jpg" alt="美好瞬间">
         <div class="cap">愿你眼里有星辰，心中有山海</div>
       </div>
+    </div>
+
+    <div class="upload-box">
+      <h2>也想看看你的照片 📷</h2>
+      <div class="tip">把你喜欢的照片放进来吧，一起留下这份回忆～<br>（照片只保存在你自己的浏览器里，随时可以删掉）</div>
+      <label class="upload-btn" for="fileInput">选择照片 🖼️</label>
+      <button class="upload-btn ghost" id="clearBtn">清空我的照片</button>
+      <input type="file" id="fileInput" accept="image/*" multiple hidden>
+      <div class="my-gallery" id="myGallery"></div>
     </div>
 
     <div class="letter">
@@ -236,6 +259,57 @@
     chip.textContent=wishes[wishIdx%wishes.length];wishIdx++;
     wishList.appendChild(chip);burstConfetti(50);
   });
+
+  /* ===== 朋友上传照片（保存在本机浏览器，可刷新保留） ===== */
+  const STORE_KEY='my_birthday_photos';
+  const fileInput=document.getElementById('fileInput');
+  const myGallery=document.getElementById('myGallery');
+  let myPhotos=[];
+  try{ myPhotos=JSON.parse(localStorage.getItem(STORE_KEY))||[]; }catch(e){ myPhotos=[]; }
+
+  function savePhotos(){
+    try{ localStorage.setItem(STORE_KEY,JSON.stringify(myPhotos)); }
+    catch(e){ alert('照片太多啦，浏览器存不下～可以先删掉几张再添加'); }
+  }
+  function renderPhotos(){
+    myGallery.innerHTML='';
+    myPhotos.forEach((src,idx)=>{
+      const box=document.createElement('div');box.className='my-photo';
+      const img=document.createElement('img');img.src=src;img.alt='我的照片';
+      const del=document.createElement('button');del.className='del';del.textContent='×';del.title='删除这张';
+      del.addEventListener('click',()=>{myPhotos.splice(idx,1);savePhotos();renderPhotos();});
+      box.appendChild(img);box.appendChild(del);myGallery.appendChild(box);
+    });
+  }
+  function readFile(file){
+    return new Promise(res=>{
+      const reader=new FileReader();
+      reader.onload=e=>{
+        const image=new Image();
+        image.onload=()=>{
+          const max=1000, scale=Math.min(1,max/Math.max(image.width,image.height));
+          const c=document.createElement('canvas');
+          c.width=image.width*scale;c.height=image.height*scale;
+          c.getContext('2d').drawImage(image,0,0,c.width,c.height);
+          res(c.toDataURL('image/jpeg',0.8));
+        };
+        image.src=e.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+  fileInput.addEventListener('change',async e=>{
+    const files=[...e.target.files].filter(f=>f.type.startsWith('image/'));
+    for(const f of files){ myPhotos.push(await readFile(f)); }
+    savePhotos();renderPhotos();burstConfetti(60);
+    fileInput.value='';
+  });
+  document.getElementById('clearBtn').addEventListener('click',()=>{
+    if(myPhotos.length===0)return;
+    if(confirm('确定清空你添加的照片吗？'))
+      {myPhotos=[];savePhotos();renderPhotos();}
+  });
+  renderPhotos();
   </script>
 </body>
 </html>
